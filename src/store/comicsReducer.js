@@ -1,43 +1,30 @@
 import {
-    FETCH_COMICS_BEGIN,
-    FETCH_COMICS_SUCCESS,
-    FETCH_COMICS_FAILURE,
-    FETCH_COMICS_DETAILS
+    ADD_COMICS,
+    CLEAR_COMICS,
+    SEARCH_COMICS,
   } from './actions';
   
   const initialState = {
-    comics: [],
-    comicDetail: [],
-    loading: false,
-    error: null
+    data: [],
+    searchTerm: ''
   };
 
   export default function comicsReducer(state = initialState, action) {
       switch(action.type){
-          case FETCH_COMICS_BEGIN:
-            return{
-                ...state,
-                loading: true,
-                error: null,
-						};
-					case FETCH_COMICS_SUCCESS:
+					case ADD_COMICS:
 						return{
-							...state,
-							loading: false,
-							items: action.payload.comics.data.results
-						};
-					case FETCH_COMICS_FAILURE:
-						return{
-							...state,
-							loading: false,
-							error: action.payload.error,
-							items: []
+              ...state,
+							data: [...state.data, ...action.payload.comics]
             };
-          case FETCH_COMICS_DETAILS:
+          case CLEAR_COMICS:
             return{
               ...state,
-              loading: false,
-              comicDetail: action.payload.comic.data.results[0]
+              data: []
+            }
+					case SEARCH_COMICS:
+						return{
+							...state,
+              searchTerm: action.payload.query,
             };
 					default:
 						return state;

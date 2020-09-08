@@ -2,6 +2,6 @@ import { combineReducers } from "redux";
 import comicsReducer from "./comicsReducer";
 
 export default combineReducers({
-    comicsReducer
+    comics: comicsReducer,
 });
 

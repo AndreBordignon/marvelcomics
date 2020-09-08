@@ -1,16 +1,34 @@
 import React from 'react';
-import { Container, Card, Thumbnail, AuthorName, TitleCharacter, Image } from './styles';
+import { Container, Card, ButtonText, TitleCharacter, Image , Button} from './styles';
 
-const ComicsList = () => {
+function ComicItem ({navigation, item, title, creators, thumbnail}){
+
+  actionButton = async (id) => {
+    navigation.navigate('Details', {id: id})
+  }
+  const imagebg = thumbnail ? {uri: `${thumbnail.path}/portrait_uncanny.${thumbnail.extension}`} : ''
   return (
-  <Container>
-    <Card>
-        <Thumbnail>Captain Marvel</Thumbnail>
-        <AuthorName>Captain Marvel</AuthorName>
-        <Image>Captain Marvel</Image>
-        <TitleCharacter>Captain Marvel</TitleCharacter>
-    </Card>
-  </Container>);
+    <Container>
+      <Card>
+        <Image           
+        style={{
+          flex: 1,
+          width: '100%',
+          height: 180,
+        }}
+        autoSize
+        resizeMode="contain" 
+        source={imagebg}
+        borderRadius={6}
+        />
+        <TitleCharacter numberOfLines={2} ellipsizeMode='tail'>{title}</TitleCharacter>
+        <Button onPress={() => actionButton(item.id)}>
+          <ButtonText>+ Detalhes</ButtonText>
+        </Button>
+      </Card>
+    </Container> 
+    
+  );
 }
 
-export default ComicsList;
+export default ComicItem;

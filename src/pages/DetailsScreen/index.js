@@ -1,49 +1,48 @@
 import React, {useState, useEffect} from 'react';
-import {Button, ActivityIndicator} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchDetails } from '../../store/actions'
-import { Container, Card, DescriptionText, AuthorName, TitleCharacter, Image } from './styles';
-
+import { ActivityIndicator} from 'react-native';
+import {getComicDetails} from './api'
+import { Container, Card, DescriptionText, Button, AuthorName, TitleCharacter, Image } from './styles';
 
 
 const Details = ({route, navigation}) => {
-  const {item} = route.params;
-  
-  const {comicsReducer} = useSelector(store => store),
-  { comicDetail, loading } = comicsReducer,
-  {title, description} = comicDetail;
-  
-  const dispatch = useDispatch();
+  const id = route.params.id;
+	const [comicDetail, setDetail] = useState({})
+	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-    dispatch(fetchDetails(item.id))
-	}, [dispatch])
-  
-  navigation.setOptions({ title: title })
+		async function getDetails(){
+      const data = await getComicDetails(id),
+      {results} = data;
+      setDetail(results[0]);
+      setLoading(false);
+		}
+		getDetails();
+  }, [])
 
-  const imagebg = {uri: `${item.thumbnail.path}/portrait_uncanny.${item.thumbnail.extension}`};
-  
+  const {title, description, thumbnail, creators} = comicDetail;
+  const imagebg = loading ? '' : `${thumbnail.path}/portrait_uncanny.${thumbnail.extension}`;
+
   return(
     <>
       {loading ? (
         <ActivityIndicator size={40} color={'#e62429'} style={{flex: 1, justifyContent: 'center'}}/>
       ) : (
-      <Container> 
-          <Image      
-          source={imagebg}   
+      <Container
+        contentContainerStyle={{padding: 20, alignItems: 'center'}}
+      >
+        <Image      
+          source={{uri: imagebg}}   
           style={{
             flex: 1,
             width: '100%',
-            margin: 10
+            height: 400,
+            marginBottom: 15,
           }}
           autoSize
           resizeMode="contain"
-          borderRadius={6} />
-          <Card>
-              <TitleCharacter>{title}</TitleCharacter>
-              <DescriptionText>{description}</DescriptionText>
-              <Button onPress={() => console.tron.log(item)} title="aaa"></Button>
-          </Card> 
+          borderRadius={6} /> 
+          <TitleCharacter>{title}</TitleCharacter>
+          <DescriptionText>{description}</DescriptionText>
       </Container>
       )}
     </>  
