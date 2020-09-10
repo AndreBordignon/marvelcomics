@@ -6,3 +6,10 @@ export const getComicDetails = async (id) => {
 
     return data;
 }
+
+export const getCharactersDetails = async (id) => {
+    const response = await api.get(`characters/${id}`),
+    {data} = response.data;
+
+    return data;
+}

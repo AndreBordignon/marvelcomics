@@ -1,23 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import { ActivityIndicator} from 'react-native';
-import {getComicDetails} from './api'
+import { getCharactersDetails } from './api'
 import { Container, Card, DescriptionText, Button, AuthorName, TitleCharacter, Image } from './styles';
 
 
-const Details = ({route, navigation}) => {
+const CharacterDetail = ({route, navigation}) => {
   const id = route.params.id;
 	const [comicDetail, setDetail] = useState({})
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-		async function getDetails(){
-      const data = await getComicDetails(id),
-      {results} = data;
-      setDetail(results[0]);
-      setLoading(false);
-		}
 		getDetails();
   }, [])
+
+  const getDetails = async () => {
+    const data = await getCharactersDetails(id),
+    {results} = data;
+    setDetail(results[0]);
+    setLoading(false);
+  }
 
   const {title, description, thumbnail, creators} = comicDetail;
   const imagebg = loading ? '' : `${thumbnail.path}/portrait_uncanny.${thumbnail.extension}`;
@@ -48,4 +49,4 @@ const Details = ({route, navigation}) => {
     </>  
   )
 }
-export default Details;
+export default CharacterDetail;

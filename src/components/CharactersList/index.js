@@ -1,19 +1,18 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { FlatList, ActivityIndicator} from 'react-native';
-import ComicsItem from './ComicsItem';
-import { getAllComics, getAllCharacters } from './api';
+import CharactersItem from './CharactersItem';
+import { getAllCharacters } from './api';
 import { Container } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { addComics } from '../../store/actions';
-import EmptyList from '../../components/EmptyList';
+import EmptyList from '../EmptyList';
 
-function ComicsList ({navigation, item}){
+function CharactersList ({navigation, item}){
 	const [loading, setLoading] = useState(true)
 	const [page, setPage] = useState(1)
 	const {data, searchTerm, searchType} = useSelector(state => state.comics);
   const dispatch = useDispatch();
   let isRendered = useRef(false);
-  
 	useEffect(() => {
 		isRendered = true;
 		loadItems();
@@ -29,7 +28,7 @@ function ComicsList ({navigation, item}){
 			const options = { page: page, limit: 10};
 			
 			const offset = options.page === 1 ? 0 : (options.limit * (options.page - 1));
-			const response = await getAllComics(searchTerm, options.limit, offset),
+			const response = await getAllCharacters(searchTerm, options.limit, offset),
 			{results} = response;
 			await dispatch(addComics(results))
 			setLoading(false)
@@ -57,10 +56,10 @@ function ComicsList ({navigation, item}){
 
   const renderItem = ({item}) => {
 		return (
-			<ComicsItem 
+			<CharactersItem 
 				item={item} 
 				navigation={navigation} 
-				title={item.title} 
+				title={item.name} 
 				thumbnail={item.thumbnail}
 			/>
 		);
@@ -73,7 +72,7 @@ function ComicsList ({navigation, item}){
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         initialNumToRender={10}
-        refreshing={loading}
+		refreshing={loading}
         numColumns={2}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={() => !loading && <EmptyList type={searchType} searchTerm={searchTerm}/>}
@@ -84,4 +83,4 @@ function ComicsList ({navigation, item}){
   );
 }
 
-export default ComicsList;
+export default CharactersList;

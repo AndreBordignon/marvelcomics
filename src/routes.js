@@ -4,7 +4,8 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './pages/HomeScreen';
-import DetailsScreen from './pages/DetailsScreen';
+import ComicDetail from './pages/ComicDetail';
+import CharacterDetail from './pages/CharacterDetail';
 import {View, Image} from 'react-native';
 
 
@@ -36,7 +37,8 @@ function Routes() {
         }}
         initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="ComicDetail" component={ComicDetail} />
+        <Stack.Screen name="CharacterDetail" component={CharacterDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -12,7 +12,7 @@ escaneie o QRCODE com o aplicativo do expo ou abra com o emulador
 * React (Hooks)
 * React-Native
 
-##Dependencies
+## Dependencies
 * [Axios](https://github.com/axios/axios)
 * [Reactotron](https://github.com/infinitered/reactotron)
 * [React Redux](https://github.com/reduxjs/react-redux)

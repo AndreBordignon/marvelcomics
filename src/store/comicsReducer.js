@@ -2,11 +2,13 @@ import {
     ADD_COMICS,
     CLEAR_COMICS,
     SEARCH_COMICS,
+    SEARCH_TYPE,
   } from './actions';
   
   const initialState = {
     data: [],
-    searchTerm: ''
+    searchTerm: '',
+    searchType: 'comics',
   };
 
   export default function comicsReducer(state = initialState, action) {
@@ -25,6 +27,11 @@ import {
 						return{
 							...state,
               searchTerm: action.payload.query,
+            };
+          case SEARCH_TYPE:
+            return{
+              ...state,
+              searchType: action.payload.search,
             };
 					default:
 						return state;
