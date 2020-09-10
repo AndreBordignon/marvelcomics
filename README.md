@@ -14,6 +14,7 @@ escaneie o QRCODE com o aplicativo do expo ou abra com o emulador
 
 ## Dependencies
 * [Axios](https://github.com/axios/axios)
+* [Expo](https://expo.io)
 * [Reactotron](https://github.com/infinitered/reactotron)
 * [React Redux](https://github.com/reduxjs/react-redux)
 * [React Navigation](https://reactnavigation.org/)
